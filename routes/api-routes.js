@@ -15,5 +15,15 @@ router.post("api/workouts", ({ body }, res) => {
 // add exercise route
 
 // get last workout route
+router.get("/api/workouts", (req, res) => {
+    Workout.findOne({})
+      .sort({ date: -1 })
+      .then(dbWorkout => {
+        res.json(dbWorkout);
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
+  });
 
 // get workouts in range (i think "in range" means for that day)

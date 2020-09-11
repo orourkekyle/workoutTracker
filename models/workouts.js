@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const workoutSchema = new Schema({
 
-  Date: {
+  date: {
     type: Date,
     default: Date.now
   },
@@ -47,12 +47,12 @@ const workoutSchema = new Schema({
   }],
 },
 
-  {
-    toJSON:
-    {
-      virtuals: true
-    }
-  }
+  // {
+  //   toJSON:
+  //   {
+  //     virtuals: true
+  //   }
+  // }
 );
 
 
