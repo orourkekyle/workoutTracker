@@ -12,14 +12,13 @@ const workoutSchema = new Schema({
   exercises: [{
     type: {
       type: String,
-      unique: true,
+      trim: true,
       required: "Enter exercise type"
     },
 
     name: {
-
-      type: Schema.Types.ObjectId,
-      ref: "Note",
+      type: String,
+      trim: true,
       required: "Enter Workout Name"
     },
 
@@ -43,24 +42,26 @@ const workoutSchema = new Schema({
     distance: {
       type: Number
     }
-
   }],
 },
-
-  // {
-  //   toJSON:
-  //   {
-  //     virtuals: true
-  //   }
-  // }
+  {
+    toJSON:
+    {
+      virtuals: true
+    }
+  }
 );
 
+// manoli said trim needs to go somewhere
 
-workoutSchema.virtual("totalDuration").get(function(){
+
+workoutSchema.virtual("totalDuration").get(function () {
   return this.exercises.reduce((total, exercises) => {
     return total + exercises.duration;
   }, 0);
 });
+
+
 const Workout = mongoose.model("workouts", workoutSchema);
 
 module.exports = Workout;
