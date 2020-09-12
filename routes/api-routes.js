@@ -49,17 +49,36 @@ router.get("/api/workouts", (req, res) => {
 
 // get workouts in range (i think "in range" means for that day)
 router.get('/api/workouts/range', (req, res) => {
-  // Replace <METHOD> with method to Find all workouts then limit with range
-  // Look into mongoose doc for how to limit with range
   // Fill in the input argument(s) to the method
-
-  Workout.findAll()
-
-    // Fill in .then() with call back function that takes result from db as input argument and send it back to browser
-    .then()
-
-    // Fill in .catch() with call back function that takes error as input argument and send it back to browser
-    .catch();
+  console.log(mongojs.date);
+  // what the fuck... why does this work?... does it actually
+  Workout.find().sort({$natural:-1}).limit(7
+  // could this also work with some tweaking?
+  // .aggregate([
+  //   {
+  //     $search: {
+  //       index: "exercise",
+  //       range: {
+  //         path: "exercises"
+  //       }
+  //     }
+  //   },
+  //   {
+  //     $limit: 10
+  //   },
+  //   {
+  //     $project: {
+  //       duration: 1,
+  //       weight: 1
+  //     }
+  //   }
+  // ]
+  ).then(dbRangeStuff => {
+      console.log("this is dbRangeStuff: ", dbRangeStuff);
+      res.json(dbRangeStuff);
+    }).catch(err => {
+      res.status(400).json(err);
+    });
 });
 
 
